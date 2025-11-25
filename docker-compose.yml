@@ -1,0 +1,45 @@
+services:
+  php:
+    build:
+      context: ./docker/php
+    container_name: backend-p2-php
+    working_dir: /var/www/html
+    volumes:
+      - ./src:/var/www/html
+      - ./scripts/stubs:/var/www/html-stubs:ro
+    networks:
+      - backend
+  nginx:
+    image: nginx:alpine
+    container_name: backend-p2-nginx
+    depends_on:
+      - php
+    ports:
+      - "${APP_PORT:-8080}:80"
+    volumes:
+      - ./src:/var/www/html
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    networks:
+      - backend
+  mysql:
+    image: mysql:8.0
+    container_name: backend-p2-mysql
+    environment:
+      - MYSQL_DATABASE=${DB_DATABASE:-backend_p2}
+      - MYSQL_USER=${DB_USERNAME:-backend}
+      - MYSQL_PASSWORD=${DB_PASSWORD:-backend}
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD:-root}
+    ports:
+      - "${DB_PUBLIC_PORT:-3307}:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf:ro
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge
+
+volumes:
+  mysql_data:
