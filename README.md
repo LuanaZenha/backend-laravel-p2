@@ -103,7 +103,7 @@ e garanta permissões de escrita em `src/database/database.sqlite`.
 - Migrações: `docker compose exec php bash -lc "php artisan migrate"`
 - Seed: `docker compose exec php bash -lc "php artisan db:seed --class=CategorySeeder"`
 
-## Dicas e Troubleshooting
+## Dicas
 - Alterar porta pública do MySQL: edite `DB_PUBLIC_PORT` em `docker-compose.yml` (ex.: `3308:3306`).
 - Conflito com MySQL local: mantenha o mapeamento para `3307` ou pare o serviço local.
 - Erro 500 com SQLite “attempt to write a readonly database”: ajuste permissões dentro do container PHP:
@@ -111,9 +111,6 @@ e garanta permissões de escrita em `src/database/database.sqlite`.
   docker compose exec php bash -lc "chown -R www-data:www-data storage bootstrap/cache database; chmod -R ug+rw storage bootstrap/cache database"
   ```
 - Se quiser expor MySQL externamente, adicione o bloco `ports` ao serviço `mysql` no `docker-compose.yml` (p. ex. `"3306:3306"`) — lembre-se de parar qualquer MySQL local para evitar conflito.
-
-## Tema
-- Layout escuro (azul petróleo e preto) aplicado em `resources/views/layouts/app.blade.php` e herdado pelas páginas.
 
 Autora: Luana de Pinho Zenha 
 Matricula: 202322133
