@@ -114,3 +114,6 @@ e garanta permissões de escrita em `src/database/database.sqlite`.
 
 ## Tema
 - Layout escuro (azul petróleo e preto) aplicado em `resources/views/layouts/app.blade.php` e herdado pelas páginas.
+
+Autora: Luana de Pinho Zenha 
+Matricula: 202322133
